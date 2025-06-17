@@ -13,12 +13,16 @@
 </head>
 <body>
     <p style="color: red;">Ifram show</p>
+     <p id="output" style="color: red;"></p>
      <button onclick="callAndroidFromIfram()">Click in Ifram</button>
 
       <script>
             function callAndroidFromIfram() {
                 Android.onButtonClicked("Hello from IFrame!");
             }
+             function fromAndroidToIFrame(message) {
+            document.getElementById("output").innerText = "Android said: " + message;
+        }
     </script>
 </body>
 </html>
