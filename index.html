@@ -29,12 +29,12 @@
 
 <body>
     <div>
-        <p>Hello from Main website!</p>
+        <p>Hello from Main website</p>
         <p id="output" style="color: blue;"></p>
         <button onclick="callAndroid()">Click Main website</button>
 
 
-        <iframe src="iframPage.html" title="page not found"></iframe>
+        <iframe id="myIframe" src="iframPage.html" title="page not found"></iframe>
     </div>
     <script>
         
@@ -44,6 +44,10 @@
 
         function fromAndroidToWebSite(message) {
             document.getElementById("output").innerText = "Android said: " + message;
+        }
+        function fromAndroidToIFrame(message) {
+            const iframe = document.getElementById('myIframe');
+            iframe.contentWindow.postMessage(message, '*'); 
         }
     </script>
 
