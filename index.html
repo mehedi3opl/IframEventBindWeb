@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Iframe Example</title>
@@ -8,16 +9,35 @@
             margin: 0;
             padding: 0;
         }
+
         iframe {
             width: 500px;
             height: 300px;
             border: 1px solid green;
         }
+
+        div {
+            border: 1px solid royalblue;
+            margin: 20px 20px;
+            padding: 20px;
+        }
     </style>
 </head>
-<body>
-    <p>Hello from Main website</p>
 
-    <iframe src="iframPage.html" title="page not found"></iframe>
+<body>
+    <div>
+        <p>Hello from Main website</p>
+        <button onclick="callAndroid()">Click Me</button>
+
+        <iframe src="iframPage.html" title="page not found"></iframe>
+
+        <script>
+            function callAndroid() {
+                Android.onButtonClicked("Hello from Web!");
+            }
+        </script>
+    </div>
+
 </body>
+
 </html>
