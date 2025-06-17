@@ -13,6 +13,12 @@
 </head>
 <body>
     <p style="color: red;">Ifram show</p>
-    <button>Click me</button>
+     <button onclick="callAndroidFromIfram()">Click in Ifram</button>
+
+      <script>
+            function callAndroidFromIfram() {
+                Android.onButtonClicked("Hello from IFrame!");
+            }
+    </script>
 </body>
 </html>
