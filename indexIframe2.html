@@ -11,7 +11,12 @@
             text-align: center;
 
         }
-
+        #myIframe {
+            margin-top: 10px;
+            width: 80%;
+            height: 200px;
+            overflow-y: scroll;
+        }
         /* Show scrollbar and style it for Android WebView (WebKit) */
         ::-webkit-scrollbar {
             width: 8px;
@@ -25,14 +30,15 @@
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
+        
     </style>
 </head>
 
 <body>
     <div>
-        <p style="color: red;">Iframe show!</p>
+        <p style="color: red;">Iframe show! 2</p>
         <p id="output" style="color: red;"></p>
-        <button onclick="callAndroidFromIfram()">Click in Ifram</button>
+        <button onclick="callAndroidFromIfram()">Click in Ifram 2</button>
         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
             industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
             scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
@@ -83,48 +89,17 @@
             typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
             sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
             PageMaker including versions of Lorem Ipsum.</p>
-
-             <iframe id="myIframe2" src="https://mehedi3opl.github.io/IframEventBindWeb/indexIframe2.html" title="page not found"></iframe>
     </div>
 
 
     <script>
         function callAndroidFromIfram() {
-            Android.onButtonClicked("Hello from IFrame!");
+            Android.onButtonClicked("Hello from iframe -> IFrame 2!");
         }
         window.addEventListener("message", function (event) {
-            if(event.data === "Hello Iframe 2"){
-                const iframe2 = document.getElementById('myIframe2');
-                iframe2.contentWindow.postMessage(event.data, '*');
-            }
-            else{
-                
-                document.getElementById("output").innerText = "Android said: " + event.data;
-            }
+            document.getElementById("output").innerText = "Android said: " + event.data;
         }, false);
-
-        // Scroll issue fix 
-        let scrollTimeout;
-
-        function notifyParent(message) {
-            parent.postMessage(message, "*");
-        }
-
-        window.addEventListener("touchstart", () => {
-            notifyParent("iframe-scroll-start");
-        });
-        // window.addEventListener("touchstart", () => {
-        //     notifyParent("iframe-scroll-end");
-        // });
         
-        // window.addEventListener("scroll", () => {
-        //     notifyParent("iframe-scroll-start");
-
-        //     // clearTimeout(scrollTimeout);
-        //     // scrollTimeout = setTimeout(() => {
-        //     //     notifyParent("iframe-scroll-end");
-        //     // }, 300);
-        // });
     </script>
 </body>
 

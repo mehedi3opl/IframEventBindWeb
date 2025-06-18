@@ -58,6 +58,10 @@
             const iframe = document.getElementById('myIframe');
             iframe.contentWindow.postMessage(message, '*');
         }
+        function fromAndroidToIFrame2(message) {
+            const iframe = document.getElementById('myIframe');
+            iframe.contentWindow.postMessage(message, '*');
+        }
 
         // Parent website to Android
 
@@ -67,7 +71,7 @@
                     AndroidScroll.disableRefresh();
                 }
             }
-            // } else if (event.data === "iframe-scroll-end") {
+            //  else if (event.data === "iframe-scroll-end") {
             //     if (AndroidScroll && AndroidScroll.enableRefresh) {
             //         AndroidScroll.enableRefresh();
             //     }
