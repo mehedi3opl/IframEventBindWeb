@@ -8,49 +8,24 @@
         body {
             margin: 0;
             padding: 0;
-        }
-
-        iframe {
-            width: 500px;
-            height: 300px;
-            border: 1px solid green;
-        }
-
-        div {
-            border: 1px solid royalblue;
-            margin: 20px 20px;
-            padding: 20px;
-        }
-        button{
-            display: block;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <div>
-        <p>Hello from Main website</p>
-        <p id="output" style="color: blue;"></p>
-        <button onclick="callAndroid()">Click Main website</button>
+    <p style="color: red;">Ifram show</p>
+    <p id="output" style="color: red;"></p>
+    <button onclick="callAndroidFromIfram()">Click in Ifram</button>
 
-
-        <iframe id="myIframe" src="iframPage.html" title="page not found"></iframe>
-    </div>
     <script>
-        
-        function callAndroid() {
-            Android.onButtonClicked("Hello from Main Website!");
+        function callAndroidFromIfram() {
+            Android.onButtonClicked("Hello from IFrame!");
         }
-
-        function fromAndroidToWebSite(message) {
-            document.getElementById("output").innerText = "Android said: " + message;
-        }
-        function fromAndroidToIFrame(message) {
-            const iframe = document.getElementById('myIframe');
-            iframe.contentWindow.postMessage(message, '*'); 
-        }
+        window.addEventListener("message", function (event) {
+            document.getElementById("output").innerText = "Android said: " + event.data;
+        }, false);
     </script>
-
 </body>
 
 </html>

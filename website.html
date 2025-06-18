@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Iframe Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        iframe {
+            width: 500px;
+            height: 300px;
+            border: 1px solid green;
+        }
+
+        div {
+            border: 1px solid royalblue;
+            margin: 20px 20px;
+            padding: 20px;
+        }
+        button{
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <p>Hello from Main website</p>
+        <p id="output" style="color: blue;"></p>
+        <button onclick="callAndroid()">Click Main website</button>
+
+
+        <iframe id="myIframe" src="iframPage.html" title="page not found"></iframe>
+    </div>
+    <script>
+        
+        function callAndroid() {
+            Android.onButtonClicked("Hello from Main Website!");
+        }
+
+        function fromAndroidToWebSite(message) {
+            document.getElementById("output").innerText = "Android said: " + message;
+        }
+        function fromAndroidToIFrame(message) {
+            const iframe = document.getElementById('myIframe');
+            iframe.contentWindow.postMessage(message, '*'); 
+        }
+    </script>
+
+</body>
+
+</html>
