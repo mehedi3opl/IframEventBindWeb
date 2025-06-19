@@ -1,10 +1,15 @@
 package com.example.iframeventbind;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -51,10 +56,43 @@ public class MainActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.webViewShow);
 
-        webView.setWebViewClient(new WebViewClient());
+        // webView.setWebViewClient(new WebViewClient());
+
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true); // For local content
+
+        // ********** Start Open Target Blank link extranla Browser
+        /*
+        webView.getSettings().setSupportMultipleWindows(true); // Important for target="_blank"
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+
+        webView.setWebViewClient(new WebViewClient()); // Keeps normal links inside WebView
+
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+                WebView tempWebView = new WebView(view.getContext());
+
+                tempWebView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        // Open the URL in external browser
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        view.getContext().startActivity(intent);
+                        return true;
+                    }
+                });
+
+                WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+                transport.setWebView(tempWebView);
+                resultMsg.sendToTarget();
+                return true;
+            }
+        });
+        */
+        // *********** END Open Target Blank link extranla Browser
+
 
         webView.addJavascriptInterface(new WebAppInterface(this), "Android");
         webView.addJavascriptInterface(new JSBridge(this, swipeRefreshLayout), "AndroidScroll");
@@ -83,7 +121,14 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     public class WebAppInterface {
         Context mContext;
@@ -120,5 +165,7 @@ public class MainActivity extends AppCompatActivity {
            // swipeRefreshLayout.post(() -> swipeRefreshLayout.setEnabled(true));
         }
     }
+
+
 
 }
