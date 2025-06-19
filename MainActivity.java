@@ -56,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.webViewShow);
 
-        // webView.setWebViewClient(new WebViewClient());
+         //webView.setWebViewClient(new WebViewClient());
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true); // For local content
 
         // ********** Start Open Target Blank link extranla Browser
-        /*
+    /*
         webView.getSettings().setSupportMultipleWindows(true); // Important for target="_blank"
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
@@ -76,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
 
                 tempWebView.setWebViewClient(new WebViewClient() {
                     @Override
-                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                        //*** we can URL filter here and load url in main-webView in app
+                        
                         // Open the URL in external browser
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
                         view.getContext().startActivity(intent);
                         return true;
                     }
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        */
+      */
         // *********** END Open Target Blank link extranla Browser
 
 
