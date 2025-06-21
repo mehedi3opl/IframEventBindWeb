@@ -28,6 +28,9 @@
           a{
             margin-right: 20px;
         }
+        button{
+             font-size: 25px;
+        }
     </style>
 </head>
 
@@ -98,7 +101,16 @@
 
     <script>
         function callAndroidFromIfram() {
-            Android.onButtonClicked("Hello from IFrame!");
+           // Android.onButtonClicked("Hello from IFrame!");
+             // Call Android native code
+            if (typeof Android !== "undefined" && Android.onButtonClicked) {
+                Android.onButtonClicked("Hello from IFrame!");
+            }
+
+            // Call iOS native code
+            if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.iOSListener) {
+                window.webkit.messageHandlers.iOSListener.postMessage("Hello from IFrame! ios");
+            }
         }
         window.addEventListener("message", function (event) {
             if(event.data === "Hello Iframe 2"){
