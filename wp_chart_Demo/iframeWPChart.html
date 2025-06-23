@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video</title>
+    <title>WP chart</title>
     <style>
         body {
             margin: 0;
@@ -16,25 +16,22 @@
             border: 1px solid green;
         }
 
-        #myVideo {
-            width: 75%;
-            height: 100vh;
-            margin: 0px 0px;
-        }
 
-        #chart {
+        #inbox {
 
-            width: 24%;
-            height: 100vh;
+           width: 100%;
+            height: 80vh;
             padding-left: 10px;
-            overflow-y: scroll;
+            overflow: scroll;
         }
 
         #container {
-            display: flex;
+             width: 90%;
+            height: 100vh;
+            padding-left: 10px;
         }
 
-       
+
 
         /* Show scrollbar and style it for Android WebView (WebKit) */
         ::-webkit-scrollbar {
@@ -64,10 +61,6 @@
 
     <div id="container">
 
-        <video id="myVideo" width="400" controls>
-            <source src="v1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
 
         <div id="chart">
             <h1 id="chartHeader" style="background: brown; text-align: center; margin-top: 0px;">Chart</h1>
@@ -85,16 +78,23 @@
     // Handle touchstart and touchmove for the entire document
     document.addEventListener("touchstart", function (event) {
         const touchedElement = event.target;
-        console.log(touchedElement);
+        const touchY = event.touches[0].pageY;
 
-        if (touchedElement.closest('#myVideo')) {
-            notifyParent("touchstartMyVideo");
-        } else if (touchedElement.closest('#chart')) {
-            notifyParent("touchstartChart");
+        // Check if the touched element is inside #inbox
+        const inbox = touchedElement.closest('#inbox');
+
+        if (inbox) {
+            // Check if #chart is scrolled to the top
+            if (inbox.scrollTop === 0) {
+                notifyParent("touchstartMyVideo"); // Enable Refresh
+            } else {
+                notifyParent("touchstartChart"); // Disable Refresh
+            }
         } else {
-            notifyParent("touchstart on unknown area");
+            notifyParent("touchstartMyVideo"); // Enable Refresh (default)
         }
     });
+
 
     // document.addEventListener("touchmove", function (event) {
     //     const touchedElement = event.target;
