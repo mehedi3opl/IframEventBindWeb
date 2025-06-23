@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 25px;
+        }
+
+        iframe {
+            border: 1px solid green;
+        }
+
+        #myVideo {
+            width: 75%;
+            height: 100vh;
+            margin: 0px 0px;
+        }
+
+        #chart {
+
+            width: 24%;
+            height: 100vh;
+            padding-left: 10px;
+            overflow-y: scroll;
+        }
+
+        #container {
+            display: flex;
+        }
+
+       
+
+        /* Show scrollbar and style it for Android WebView (WebKit) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        a {
+            margin-right: 20px;
+        }
+
+        button {
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+
+        <video id="myVideo" width="400" controls>
+            <source src="v1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <div id="    ">
+            <h1 id="chartHeader" style="background: brown; text-align: center; margin-top: 0px;">Chart</h1>
+            <section id="inbox"></section>
+
+        </div>
+    </div>
+
+</body>
+<script>
+    function notifyParent(message) {
+        parent.postMessage(message, "*");
+    }
+
+    // Handle touchstart and touchmove for the entire document
+    document.addEventListener("touchstart", function (event) {
+        const touchedElement = event.target;
+
+        if (touchedElement.closest('#myVideo')) {
+            notifyParent("touchstartMyVideo");
+        } else if (touchedElement.closest('#chart')) {
+            notifyParent("touchstartChart");
+        } else {
+            notifyParent("touchstart on unknown area");
+        }
+    });
+
+    // document.addEventListener("touchmove", function (event) {
+    //     const touchedElement = event.target;
+
+    //     if (touchedElement.closest('#myVideo')) {
+    //         notifyParent("touchmoveMyVideo");
+    //     } else if (touchedElement.closest('#chart')) {
+    //         notifyParent("touchmoveChart");
+    //     } else {
+    //         notifyParent("touchmove on unknown area");
+    //     }
+    // });
+
+
+    (() => {
+
+        function populatePage(inbox) {
+            const frag = new DocumentFragment();
+            let date = new Date();
+            for (let i = 0; i < NUM_EMAILs; ++i) {
+
+
+                const div = document.createElement('div');
+                div.innerHTML = `<span class="label">Email </span></span>${i}</span>`;
+                frag.appendChild(div);
+            }
+            inbox.appendChild(frag);
+        }
+
+        const NUM_EMAILs = 100;
+        // let _startY = 0;
+
+        // const inbox = document.querySelector('#inbox');
+
+        // inbox.addEventListener('touchstart', e => {
+        //     _startY = e.touches[0].pageY;
+        // }, { passive: true });
+
+        // inbox.addEventListener('touchmove', e => {
+        //     const y = e.touches[0].pageY;
+        //     // Activate custom pull-to-refresh effects when at the top fo the container
+        //     // and user is scrolling up.
+        //     if (document.scrollingElement.scrollTop === 0 && y > _startY &&
+        //         !document.body.classList.contains('refreshing')) {
+        //         simulateRefreshAction();
+        //     }
+        // }, { passive: true });
+
+        populatePage(inbox);
+    })();
+</script>
+
+</html>
